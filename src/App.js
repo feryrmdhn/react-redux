@@ -1,25 +1,60 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { connect } from 'react-redux';
+import { getData, delData } from './store/actions/app';
+import FormTest from './Form';
+import { Button } from 'react-bootstrap';
 import './App.css';
 
-function App() {
+function App({ Auth, getData, Data, delData }) {
+  const [loading, setLoading] = useState(false)
+
+  const getListData = async () => {
+    setLoading(true)
+    await getData()
+    setLoading(false)
+  }
+
+  console.log(Auth);
+
+  const remove = async (id) => {
+    await delData(id)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button onClick={getListData}>
+        {loading ?
+          "Loading..."
+          :
+          "Get data"
+        }
+      </Button>
+      <div>
+        {Data.map(item => (
+          <div key={item.id}>
+            <p>{item.nama}</p>
+            <button onClick={() => remove(item.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
+      <FormTest />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  Data: state.auth.data,
+  Auth: state.auth.isAuthenticate
+});
+
+const mapDispacthToProps = dispatch => {
+  return {
+    getData: () => dispatch(getData()),
+    delData: (id) => dispatch(delData(id))
+  };
+
+};
+export default connect(
+  mapStateToProps,
+  mapDispacthToProps
+)(App);

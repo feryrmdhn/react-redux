@@ -14,7 +14,7 @@ function App({ Auth, getData, Data, delData }) {
     setLoading(false)
   }
 
-  console.log(Auth);
+  console.log('check auth response', Auth);
 
   const remove = async (id) => {
     await delData(id)

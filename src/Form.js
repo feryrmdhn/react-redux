@@ -56,7 +56,7 @@ const mapDispacthToProps = (dispatch) => {
 
 };
 export default connect(
-    //tidak ada mapStateToProps, jadi pke null
+    //There is no  mapStateToProps = null
     null,
     mapDispacthToProps
 )(FormTest);

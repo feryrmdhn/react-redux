@@ -21,7 +21,7 @@ export const getData = () => {
 export const postData = (data) => {
     return async dispatch => {
         await axios.post(baseUrl, data)
-            .then(res => {
+            .then(() => {
                 dispatch({
                     type: POST_DATA,
                 });
@@ -35,7 +35,7 @@ export const postData = (data) => {
 export const delData = (id) => {
     return async dispatch => {
         await axios.delete(`${baseUrl}/${id}`)
-            .then(res => {
+            .then(() => {
                 dispatch({
                     type: DELETE_DATA,
                     payload: id
